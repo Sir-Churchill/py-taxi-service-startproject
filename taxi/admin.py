@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from taxi.models import Driver, Manufacturer, Car
 
@@ -6,11 +7,11 @@ from taxi.models import Driver, Manufacturer, Car
 admin.site.register(Manufacturer)
 @admin.register(Driver)
 class DriverAdmin(admin.ModelAdmin):
-    fieldsets = (
-        ("Additional info", {"fields": ("username","password", "first_name", "last_name", "license_number")}),
+    fieldsets = UserAdmin.fieldsets + (
+        ("Additional info", {"fields": ("license_number",)}),
     )
-    add_fieldsets = (
-        ("Additional info", {"fields": ("username","password", "first_name", "last_name", "license_number")}),
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ("Additional info", {"fields": ("license_number",)}),
     )
 
     list_display = ("username", "email", "first_name", "last_name", "license_number")
@@ -18,3 +19,4 @@ class DriverAdmin(admin.ModelAdmin):
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     search_fields = ("model", "manufacturer__name")
+    list_filter = ("manufacturer",)

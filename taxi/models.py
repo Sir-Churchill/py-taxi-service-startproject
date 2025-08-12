@@ -10,15 +10,15 @@ class Manufacturer(models.Model):
     country = models.CharField(max_length=255)
 
     class Meta:
-        verbose_name = "Manufacturer"
-        verbose_name_plural = "Manufacturers"
+        verbose_name = "manufacturer"
+        verbose_name_plural = "manufacturers"
 
 class Driver(AbstractUser):
     license_number = models.CharField(max_length=255, unique=True)
 
     class Meta:
-        verbose_name = "Driver"
-        verbose_name_plural = "Drivers"
+        verbose_name = "driver"
+        verbose_name_plural = "drivers"
 
 
 class Car(models.Model):
@@ -27,5 +27,8 @@ class Car(models.Model):
     drivers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="cars")
 
     class Meta:
-        verbose_name = "Car"
-        verbose_name_plural = "Cars"
+        verbose_name = "car"
+        verbose_name_plural = "cars"
+
+    def __str__(self):
+        return f"{self.model} {self.manufacturer}"
